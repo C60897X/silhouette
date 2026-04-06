@@ -5,6 +5,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/section-01-intro.css">
+    <link rel="stylesheet" href="./styles/section-02-landing.css">
+    <link rel="stylesheet" href="./styles/section-03-broken-photo.css">
+    <link rel="stylesheet" href="./styles/section-05-p2-combing.css">
     <link rel="stylesheet" href="./styles/base.css">
 </head>
 <body>
@@ -22,7 +25,6 @@
                                     <span class="intro-text-typed" aria-hidden="true"></span>
                                 </span>
                             </span>
-
                             <button id="intro-cat-hitbox" class="intro-cat-hitbox" aria-label="Reveal Coco name">
                                 <img id="intro-inline-cat-image" class="intro-inline-cat-image" src="./assets/intro/start-intro-cat.png" alt="Coco">
                             </button>
@@ -32,7 +34,6 @@
                                 <span class="intro-text-typed" aria-hidden="true"></span>
                             </span>
                         </div>
-
                         <div class="intro-line intro-line-2">
                             <span id="intro-text-line-2" class="intro-text-segment intro-write" data-text="From the moment I saw her, I knew she would become a member of our family.">
                                 <span class="intro-text-ghost">From the moment I saw her, I knew she would become a member of our family.</span>
@@ -41,12 +42,10 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="intro-hover-cursor" class="intro-hover-cursor" aria-hidden="true">
                     <img id="intro-hover-paw" class="intro-hover-paw" src="./assets/shared/objects/mouse-icon-paw-dark-32.png" alt="">
                     <div id="intro-hover-enter" class="intro-hover-enter">Enter</div>
                 </div>
-
                 <div id="intro-memory-scenes" class="intro-memory-scenes">
                     <div id="intro-memory-text-stage" class="intro-memory-text-stage">
                         <div id="intro-memory-text" class="intro-memory-text" data-text="">
@@ -55,15 +54,12 @@
                         </div>
                         <div class="intro-memory-text-line" aria-hidden="true"></div>
                     </div>
-
                     <button id="intro-photo-button" class="intro-photo-button" aria-label="Take photo">
                         <img src="./assets/intro/intro-memory-scenes-6-photo-button.png" alt="Take photo">
                     </button>
-
                     <div id="intro-memory-progress" class="intro-memory-progress" aria-hidden="true">
                         <div id="intro-memory-progress-fill" class="intro-memory-progress-fill"></div>
                     </div>
-
                     <div id="intro-memory-track" class="intro-memory-track">
                         <img class="intro-memory-image" src="./assets/intro/intro-memory-scenes-1.png" alt="Memory scene 1">
                         <img class="intro-memory-image" src="./assets/intro/intro-memory-scenes-2.png" alt="Memory scene 2">
@@ -72,6 +68,81 @@
                         <img class="intro-memory-image" src="./assets/intro/intro-memory-scenes-5.png" alt="Memory scene 5">
                         <img class="intro-memory-image" src="./assets/intro/intro-memory-scenes-6.png" alt="Memory scene 6">
                     </div>
+                </div>
+                <!-- temporary debug button -->
+                <div class="debug-jump-panel">
+                    <button id="debug-jump-section-1" class="debug-jump-button" aria-label="Jump to section 1">Jump to S1</button>
+                    <button id="debug-jump-section-2" class="debug-jump-button" aria-label="Jump to section 2">Jump to S2</button>
+                    <button id="debug-jump-section-3" class="debug-jump-button" aria-label="Jump to section 3">Jump to S3</button>
+                </div>
+            </div>
+        </section>
+        <!-- section 2 landing page -->
+        <section id="section-02-landing" class="story-section">
+            <div id="landing-frame" class="landing-frame">
+                <div id="landing-opening-scene" class="landing-opening-scene">
+                    <div class="landing-background">
+                        <img src="./assets/intro/intro-transition-set-1-7.png" alt="Landing opening background">
+                    </div>
+                    <div id="landing-text-stage" class="landing-text-stage">
+                        <div class="landing-text-block">
+                            <div class="landing-line landing-line-1">
+                                <span id="landing-text-line-1a" class="landing-text-segment landing-write" data-text="I lost">
+                                    <span class="landing-text-ghost">I lost</span>
+                                    <span class="landing-text-typed" aria-hidden="true"></span>
+                                </span>
+                                <button id="landing-cat-hitbox" class="landing-cat-hitbox" aria-label="Landing cat image button">
+                                    <img id="landing-inline-cat-image" class="landing-inline-cat-image" src="./assets/landing/start-landing-cat.jpg" alt="Coco">
+                                </button>
+                                <span id="landing-text-line-1b" class="landing-text-segment landing-write" data-text="due to chronic diseases.">
+                                    <span class="landing-text-ghost">due to chronic diseases.</span>
+                                    <span class="landing-text-typed" aria-hidden="true"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="landing-transition-stage" class="landing-transition-stage" aria-hidden="true"></div>
+                <div id="landing-page-stage" class="landing-page-stage" aria-hidden="true">
+                    <img id="landing-page-image" class="landing-page-image" src="./assets/landing/landing-page-person.png" alt="Landing page">
+                    <div class="landing-page-ui">
+                        <div class="landing-page-copy">
+                            <div id="landing-page-title" class="landing-page-title landing-page-write" data-text="Title">
+                                <span class="landing-page-text-ghost">Title</span>
+                                <span class="landing-page-text-typed" aria-hidden="true"></span>
+                            </div>
+                            <div id="landing-page-subtitle" class="landing-page-subtitle landing-page-write" data-text="A narrative about pet loss, grief, and memory">
+                                <span class="landing-page-text-ghost">A narrative about pet loss, grief, and memory</span>
+                                <span class="landing-page-text-typed" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <button id="landing-about-button" class="narrative-button narrative-button--light landing-about-button" aria-label="About">
+                            <img class="narrative-button-bg" src="./assets/shared/objects/button-background-light.png" alt="">
+                            <span class="narrative-button-label">About</span>
+                        </button>
+                    </div>
+                    <div id="landing-hover-cursor" class="landing-hover-cursor" aria-hidden="true">
+                        <div class="landing-hover-enter">Enter</div>
+                    </div>
+                    <div id="landing-exit-overlay" class="landing-exit-overlay" aria-hidden="true"></div>
+                </div>
+            </div>
+        </section>
+        <!-- section 3 broken photo -->
+        <section id="section-03-broken-photo" class="story-section">
+            <div id="broken-photo-frame" class="broken-photo-frame">
+                <div id="broken-photo-stage" class="broken-photo-stage">
+                    <img id="broken-photo-heart" class="broken-photo-heart" src="./assets/broken-photo/heart.png" alt="Broken photo heart piece">
+                    <img id="broken-photo-positioning" class="broken-photo-positioning" src="./assets/broken-photo/photo-pieces-positioning.png" alt="Photo pieces positioning reference">
+                </div>
+            </div>
+        </section>
+        <!-- section 5 photo piece 2 subsection: combing -->
+        <section id="section-05-p2-combing" class="story-section">
+            <div id="p2-combing-frame" class="p2-combing-frame">
+                <div id="p2-combing-stage" class="p2-combing-stage">
+                    <img id="p2-combing-image" class="p2-combing-image" src="./assets/p2-combing/before-comb-cat.png" alt="Before comb cat">
+                    <img id="p2-drag-zone" class="p2-drag-zone" src="./assets/p2-combing/drag-trigger-zone.png" alt="Drag trigger zone">
                 </div>
             </div>
         </section>

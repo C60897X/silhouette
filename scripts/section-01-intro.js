@@ -7,15 +7,12 @@ export function initIntroSection() {
   const memoryTrack = document.getElementById("intro-memory-track");
   const memoryProgressFill = document.getElementById("intro-memory-progress-fill");
   const photoButton = document.getElementById("intro-photo-button");
-
   const introTextLine1a = document.getElementById("intro-text-line-1a");
   const introTextLine1b = document.getElementById("intro-text-line-1b");
   const introTextLine2 = document.getElementById("intro-text-line-2");
-
   const memoryTextElement = document.getElementById("intro-memory-text");
   const memoryTextGhost = document.getElementById("intro-memory-text-ghost");
   const memoryTextTyped = document.getElementById("intro-memory-text-typed");
-
   const memoryImages = memoryTrack ? Array.from(memoryTrack.querySelectorAll(".intro-memory-image")) : [];
   const firstMemoryImage = memoryImages[0] || null;
   const lastMemoryImage = memoryImages[memoryImages.length - 1] || null;
@@ -69,11 +66,9 @@ export function initIntroSection() {
   let touchStartY = null;
   let rafId = null;
   let typingSequenceDone = false;
-
   let currentMemoryTextIndex = -1;
   let pendingMemoryTextIndex = -1;
   let memoryTextTransitioning = false;
-
   let currentMemoryIndex = 0;
   let memoryStepLocked = false;
   let accumulatedWheelDelta = 0;
@@ -461,6 +456,14 @@ export function initIntroSection() {
 
     await playFullScreenTransition(TRANSITION_SEQUENCE_FRAMES);
 
+    document.dispatchEvent(new CustomEvent("showLandingSection"));
+
+    await new Promise(function (resolve) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(resolve);
+      });
+    });
+
     memoryScenes.style.opacity = "0";
     memoryScenes.style.pointerEvents = "none";
     hideTransitionOverlay();
@@ -597,6 +600,80 @@ export function initIntroSection() {
       updatePhotoButtonVisibility();
     }
   });
+
+  /* TEMP DEBUG JUMP BUTTONS — DELETE THIS WHOLE BLOCK LATER */
+  {
+    const debugJumpSection1Button = document.getElementById("debug-jump-section-1");
+    const debugJumpSection2Button = document.getElementById("debug-jump-section-2");
+    const debugJumpSection3Button = document.getElementById("debug-jump-section-3");
+
+    function hideIntroUi() {
+      currentFrame = 0;
+      introTextStage.classList.add("is-hidden");
+      memoryScenes.classList.remove("is-visible");
+      memoryScenes.style.opacity = "0";
+      memoryScenes.style.pointerEvents = "none";
+      hideCursor();
+      hideTransitionOverlay();
+    }
+
+    function resetToSectionOneStart() {
+      currentFrame = 1;
+      introFrame.classList.remove("is-frame-2");
+      introTextStage.classList.remove("is-hidden");
+      memoryScenes.classList.remove("is-visible");
+      memoryScenes.style.opacity = "";
+      memoryScenes.style.pointerEvents = "";
+      catHitbox.classList.remove("is-hidden");
+      setFullText(introTextLine1a, "This is");
+      setTypingText(introTextLine1a, 0);
+      setTypingText(introTextLine1b, 0);
+      setTypingText(introTextLine2, 0);
+      typingSequenceDone = false;
+      resetMemoryText();
+      currentMemoryIndex = 0;
+      accumulatedWheelDelta = 0;
+      accumulatedTouchDelta = 0;
+      memoryStepLocked = false;
+      isPhotoSequencePlaying = false;
+      updatePhotoButtonVisibility();
+      hideCursor();
+      hideTransitionOverlay();
+      runIntroWritingSequence();
+    }
+
+    function jumpToSectionTwo() {
+      hideIntroUi();
+      document.dispatchEvent(new CustomEvent("showLandingSection"));
+    }
+
+    function jumpToSectionThree() {
+      hideIntroUi();
+      document.dispatchEvent(new CustomEvent("showBrokenPhotoSection"));
+    }
+
+    if (debugJumpSection1Button) {
+      debugJumpSection1Button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        resetToSectionOneStart();
+      });
+    }
+
+    if (debugJumpSection2Button) {
+      debugJumpSection2Button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        jumpToSectionTwo();
+      });
+    }
+
+    if (debugJumpSection3Button) {
+      debugJumpSection3Button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        jumpToSectionThree();
+      });
+    }
+  }
+  /* END TEMP DEBUG JUMP BLOCK */
 
   runIntroWritingSequence();
 }

@@ -10,3 +10,83 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+/* temporary debug button */
+.debug-jump-panel {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  display: flex;
+  gap: 8px;
+}
+
+.debug-jump-button {
+  appearance: none;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(18, 27, 40, 0.8);
+  color: #ffffff;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* buttons */
+.narrative-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: auto;
+  cursor: pointer;
+}
+
+.narrative-button img,
+.narrative-button-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.narrative-button-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 25px;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.narrative-button--light .narrative-button-label {
+  color: #162C57;
+}
+
+.narrative-button--dark .narrative-button-label {
+  color: #ffffff;
+}
+
+.ui-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: rgba(18, 27, 40, 0.6);
+  color: #ffffff;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
