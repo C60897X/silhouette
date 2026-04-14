@@ -43,6 +43,19 @@
     user-select: none;
     -webkit-user-drag: none;
   }
+
+  .p3-accompany-filter {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    z-index: 2;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
   
   .p3-time-hit {
     position: absolute;
@@ -51,7 +64,7 @@
     width: 100px;
     height: 50px;
     transform: translate(-50%, -50%);
-    z-index: 3;
+    z-index: 5;
     cursor: pointer;
     opacity: 0;
     pointer-events: none;
@@ -103,7 +116,7 @@
     transform: translate(-50%, -50%) scale(0.92);
     opacity: 0;
     pointer-events: none;
-    z-index: 4;
+    z-index: 6;
     cursor: pointer;
     transition: opacity 260ms ease, transform 220ms ease;
     user-select: none;
@@ -118,3 +131,36 @@
   .p3-photo-piece:hover {
     transform: translate(-50%, -50%) scale(0.97);
   }
+
+  .p3-hover-cursor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(-9999px, -9999px, 0);
+    transition: opacity 100ms ease;
+    z-index: 10;
+    will-change: transform, opacity;
+  }
+  
+  .p3-hover-cursor.is-visible {
+    opacity: 1;
+  }
+  
+  .p3-hover-cursor img {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+
+  #section-06-p3-accompany.is-interactive {
+    cursor: none;
+  }
+
+  .p3-time-hit,
+.p3-photo-piece {
+  cursor: none !important;
+}

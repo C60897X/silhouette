@@ -295,6 +295,43 @@
     filter: brightness(1.08);
   }
   
+  #section-03-broken-photo.is-interactive {
+    cursor: none;
+  }
+  
+  #section-03-broken-photo.is-interactive .broken-photo-piece.is-interactive .broken-photo-piece-hit svg path,
+  #section-03-broken-photo.is-interactive .broken-photo-piece.is-interactive .broken-photo-piece-hit svg polygon,
+  #section-03-broken-photo.is-interactive .broken-photo-piece.is-interactive .broken-photo-piece-hit svg rect,
+  #section-03-broken-photo.is-interactive .broken-photo-piece.is-interactive .broken-photo-piece-hit svg circle,
+  #section-03-broken-photo.is-interactive .broken-photo-piece.is-interactive .broken-photo-piece-hit svg ellipse,
+  #section-03-broken-photo.is-interactive .broken-photo-full-heart-hit {
+    cursor: none !important;
+  }
+  
+  .broken-photo-hover-cursor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(-9999px, -9999px, 0);
+    transition: opacity 100ms ease;
+    z-index: 30;
+    will-change: transform, opacity;
+  }
+  
+  .broken-photo-hover-cursor.is-visible {
+    opacity: 1;
+  }
+  
+  .broken-photo-hover-cursor img {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+  
   .broken-photo-exit-overlay {
     position: absolute;
     inset: 0;

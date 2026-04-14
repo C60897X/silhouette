@@ -14,11 +14,14 @@ export function initP3AccompanySection() {
     const SCENE_5PM_3_SRC = "./assets/p3-accompany/5pm-scene-3.png";
     const SCENE_5PM_4_SRC = "./assets/p3-accompany/5pm-scene-4.png";
     const PHOTO_PIECE_SRC = "./assets/p3-accompany/photo-piece.png";
+    const INTERIOR_FILTER_SRC = "./assets/shared/memory-pieces-interior-filter.png";
   
     let currentStep = 0;
     let isAnimating = false;
     let clockIndicator = null;
     let photoPieceImage = null;
+    let filterImage = null;
+    let hoverCursor = null;
   
     function sleep(ms) {
       return new Promise(function (resolve) {
@@ -45,6 +48,58 @@ export function initP3AccompanySection() {
   
     function preventImageDrag(event) {
       event.preventDefault();
+    }
+
+    function ensureHoverCursor() {
+      if (hoverCursor) return hoverCursor;
+    
+      hoverCursor = document.createElement("div");
+      hoverCursor.className = "p3-hover-cursor";
+    
+      const img = document.createElement("img");
+      img.src = "./assets/shared/objects/mouse-icon-paw-dark-32.png";
+      img.alt = "";
+    
+      hoverCursor.appendChild(img);
+      p3AccompanySection.appendChild(hoverCursor);
+    
+      return hoverCursor;
+    }
+    
+    function moveCursor(event) {
+      const rect = p3AccompanySection.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+    
+      hoverCursor.style.transform = `translate3d(${x - 16}px, ${y - 16}px, 0)`;
+    }
+    
+    function showCursor() {
+      ensureHoverCursor().classList.add("is-visible");
+      p3AccompanySection.classList.add("is-interactive");
+    }
+    
+    function hideCursor() {
+      if (hoverCursor) {
+        hoverCursor.classList.remove("is-visible");
+      }
+      p3AccompanySection.classList.remove("is-interactive");
+    }
+
+    function ensureFilterImage() {
+      if (filterImage) {
+        return filterImage;
+      }
+    
+      filterImage = document.createElement("img");
+      filterImage.className = "p3-accompany-filter";
+      filterImage.src = INTERIOR_FILTER_SRC;
+      filterImage.alt = "";
+      filterImage.addEventListener("dragstart", preventImageDrag);
+    
+      p3AccompanyImage.parentNode.appendChild(filterImage);
+    
+      return filterImage;
     }
   
     function ensureClockIndicator() {
@@ -77,36 +132,41 @@ export function initP3AccompanySection() {
       if (photoPieceImage) {
         return photoPieceImage;
       }
-  
+    
       photoPieceImage = document.createElement("img");
       photoPieceImage.className = "p3-photo-piece";
       photoPieceImage.src = PHOTO_PIECE_SRC;
       photoPieceImage.alt = "Photo piece";
-  
+    
       p3AccompanyImage.parentNode.appendChild(photoPieceImage);
-  
+    
       photoPieceImage.addEventListener("dragstart", preventImageDrag);
-  
+    
+      // existing indicator behavior
       photoPieceImage.addEventListener("mouseenter", function () {
         showClockIndicator("Retrieve the photo piece");
+        showCursor(); // ⭐ ADD
       });
-  
+    
       photoPieceImage.addEventListener("mouseleave", function () {
         hideClockIndicator();
+        hideCursor(); // ⭐ ADD
       });
-  
+    
+      photoPieceImage.addEventListener("mousemove", moveCursor); // ⭐ ADD
+    
       photoPieceImage.addEventListener("click", async function () {
         document.dispatchEvent(new Event("returnToBrokenPhotoHub"));
-  
+    
         await new Promise(function (resolve) {
           requestAnimationFrame(function () {
             requestAnimationFrame(resolve);
           });
         });
-  
+    
         p3AccompanySection.classList.add("is-complete");
       });
-  
+    
       return photoPieceImage;
     }
   
@@ -165,6 +225,7 @@ export function initP3AccompanySection() {
     function resetSection() {
       currentStep = 0;
       isAnimating = false;
+      hideCursor();
   
       p3AccompanyImage.src = SCENE_3PM_SRC;
   
@@ -177,6 +238,7 @@ export function initP3AccompanySection() {
     }
   
     function revealP3AccompanySection() {
+      ensureFilterImage();
       resetSection();
       p3AccompanySection.classList.remove("is-complete");
       p3AccompanySection.classList.add("is-visible");
@@ -184,6 +246,9 @@ export function initP3AccompanySection() {
   
     p3AccompanyImage.addEventListener("dragstart", preventImageDrag);
     p3TimeHit.addEventListener("click", handleTimeClick);
+    p3TimeHit.addEventListener("mouseenter", showCursor);
+    p3TimeHit.addEventListener("mouseleave", hideCursor);
+    p3TimeHit.addEventListener("mousemove", moveCursor);
   
     document.addEventListener("showP3AccompanySection", function () {
       revealP3AccompanySection();
