@@ -3,6 +3,7 @@ export function initIntroSection() {
   const introTextStage = document.getElementById("intro-text-stage");
   const catHitbox = document.getElementById("intro-cat-hitbox");
   const hoverCursor = document.getElementById("intro-hover-cursor");
+  const hoverPaw = document.getElementById("intro-hover-paw");
   const memoryScenes = document.getElementById("intro-memory-scenes");
   const memoryTrack = document.getElementById("intro-memory-track");
   const memoryProgressFill = document.getElementById("intro-memory-progress-fill");
@@ -412,14 +413,28 @@ export function initIntroSection() {
 
   function hideCursor() {
     hoverCursor.classList.remove("is-visible");
+    introFrame.classList.remove("is-memory-hover");
   }
 
   function setPawCursor() {
     hoverCursor.classList.remove("is-enter");
+    setClickCursorIcon();
   }
 
   function setEnterCursor() {
-    hoverCursor.classList.add("is-enter");
+    hoverCursor.classList.remove("is-enter");
+    setClickCursorIcon();
+  }
+
+  function setClickCursorIcon() {
+    if (!hoverPaw) return;
+    hoverPaw.src = "./assets/shared/objects/mouse-icon-paw-dark-32.png";
+  }
+  
+  function setScrollCursorIcon() {
+    if (!hoverPaw) return;
+    hoverCursor.classList.remove("is-enter");
+    hoverPaw.src = "./assets/shared/objects/mouse-icon-paw-dark-scroll.png";
   }
 
   function isInside(event, element) {
@@ -568,6 +583,9 @@ export function initIntroSection() {
     if (currentMemoryIndex !== memoryImages.length - 1) return;
     if (memoryStepLocked || isPhotoSequencePlaying) return;
 
+    hideCursor();
+  introFrame.classList.remove("is-memory-hover");
+
     isPhotoSequencePlaying = true;
     memoryStepLocked = true;
     updatePhotoButtonVisibility();
@@ -593,6 +611,7 @@ export function initIntroSection() {
     currentFrame = 3;
     hideCursor();
     introFrame.classList.remove("is-frame-2");
+    introFrame.classList.remove("is-memory-hover");
     introTextStage.classList.add("is-hidden");
     memoryScenes.classList.add("is-visible");
     memoryScenes.style.opacity = "";
@@ -609,6 +628,8 @@ export function initIntroSection() {
 
     hasStartedMemoryScroll = false;
     showScrollIndicator();
+    setScrollCursorIcon();
+    hideCursor();
 
     accumulatedWheelDelta = 0;
     accumulatedTouchDelta = 0;
@@ -654,8 +675,44 @@ export function initIntroSection() {
 
     if (currentFrame === 2) {
       moveCursor(event);
-      setEnterCursor();
+      setClickCursorIcon();
       showCursor();
+      return;
+    }
+
+    // if (currentFrame === 3 && !memoryStepLocked && !isPhotoSequencePlaying) {
+    //   moveCursor(event);
+    //   setScrollCursorIcon();
+    //   showCursor();
+    //   return;
+    // }
+
+    if (currentFrame === 3) {
+      const isAtLastScene = currentMemoryIndex === memoryImages.length - 1 && !memoryStepLocked && !isPhotoSequencePlaying;
+    
+      if (isAtLastScene) {
+        if (isInside(event, photoButton) && photoButton.classList.contains("is-visible")) {
+          introFrame.classList.add("is-memory-hover");
+          moveCursor(event);
+          setClickCursorIcon();
+          showCursor();
+        } else {
+          introFrame.classList.remove("is-memory-hover");
+          hideCursor();
+        }
+        return;
+      }
+    
+      if (!memoryStepLocked && !isPhotoSequencePlaying) {
+        introFrame.classList.add("is-memory-hover");
+        moveCursor(event);
+        setScrollCursorIcon();
+        showCursor();
+        return;
+      }
+    
+      introFrame.classList.remove("is-memory-hover");
+      hideCursor();
       return;
     }
 

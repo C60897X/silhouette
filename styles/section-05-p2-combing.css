@@ -1,197 +1,219 @@
 #section-05-p2-combing {
-    position: fixed;
-    inset: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 8;
-  }
-  #section-05-p2-combing.is-visible {
-    visibility: visible;
-    pointer-events: auto;
-  }
-  #section-05-p2-combing.is-complete {
-    visibility: hidden;
-    pointer-events: none;
-  }
-  .p2-combing-frame {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: #ffffff;
-  }
-  .p2-combing-stage {
-    position: absolute;
-    inset: 0;
-    background: #ffffff;
-  }
-  .p2-combing-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  .p2-drag-zone {
-    position: absolute;
-    left: 58%;
-    top: 33%;
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: none;
-    max-height: none;
-    transform: translate(-50%, -50%) scale(0.9);
-    cursor: pointer;
-    z-index: 2;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 260ms ease;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  
-  .p2-drag-zone.is-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7e4de;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 8;
+}
 
-  .p2-drag-zone.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
+#section-05-p2-combing.is-visible {
+  visibility: visible;
+  pointer-events: auto;
+}
 
-  .p2-drag-indicator.ui-indicator {
-    position: absolute;
-    left: 50%;
-    bottom: 3%;
-    top: auto;
-    transform: translateX(-50%);
-    z-index: 7;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 220ms ease;
-    font-size: 18px;
-    line-height: 1;
-    padding: 12px 28px;
-    background: rgba(18, 27, 40, 0.6);
-    color: #ffffff;
-    border-radius: 5px;
-    /* font-family: "Source Sans 3", sans-serif; */
-    white-space: nowrap;
-  }
+#section-05-p2-combing.is-complete {
+  visibility: hidden;
+  pointer-events: none;
+}
 
-  .p2-drag-indicator.is-visible {
-    opacity: 1;
-  }
-  .p2-comb {
-    position: absolute;
-    left: 46%;
-    top: 49%;
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: none;
-    max-height: none;
-    transform: translate(-50%, -50%) scale(0.8);
-    z-index: 4;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 260ms ease;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  .p2-comb.is-visible {
-    opacity: 1;
-  }
-  .p2-comb.is-hidden {
-    opacity: 0;
-  }
-  .p2-comb.is-animating {
-    animation: p2CombMotion 3.4s cubic-bezier(0.35, 0.05, 0.2, 1) forwards;
-  }
-  @keyframes p2CombMotion {
-    0% {
-      left: 46%;
-      top: 49%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    12% {
-      left: 56%;
-      top: 59%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    22% {
-      left: 61%;
-      top: 56%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    34% {
-      left: 71%;
-      top: 63%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    52% {
-      left: 46%;
-      top: 49%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    66% {
-      left: 56%;
-      top: 59%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    76% {
-      left: 61%;
-      top: 56%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    100% {
-      left: 71%;
-      top: 63%;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-  }
-  .p2-darken-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(18, 27, 40, 0.55);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 260ms ease;
-    z-index: 5;
-  }
-  .p2-darken-overlay.is-visible {
-    opacity: 1;
-  }
-  .p2-photo-piece {
-    position: absolute;
-    left: 52%;
-    top: 40%;
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: none;
-    max-height: none;
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 260ms ease, transform 220ms ease;
-    z-index: 6;
-    user-select: none;
-    -webkit-user-drag: none;
-    cursor: pointer;
-  }
-  .p2-photo-piece.is-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .p2-photo-piece:hover {
-    transform: translate(-50%, -50%) scale(0.95);
-  }
+#section-05-p2-combing.is-interactive {
+  cursor: none;
+}
+
+.p2-combing-frame {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #e7e4de;
+}
+
+.p2-combing-stage {
+  position: absolute;
+  inset: 0;
+  background: #e7e4de;
+  --scene-top-gap: 0px;
+  --scene-bottom-gap: 0px;
+}
+
+.p2-combing-image {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-50%);
+  user-select: none;
+  -webkit-user-drag: none;
+  z-index: 1;
+}
+
+.p2-combing-stage.is-tall-image .p2-combing-image {
+  top: 0;
+  transform: none;
+}
+
+.p2-scene-filter {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  z-index: 4;
+}
+
+.p2-combing-stage.is-tall-image .p2-scene-filter {
+  top: 0;
+  transform: none;
+}
+
+.p2-drag-zone {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  cursor: none !important;
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.p2-drag-zone.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.p2-drag-zone.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.p2-drag-indicator.ui-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 3%;
+  top: auto;
+  transform: translateX(-50%);
+  z-index: 9;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  font-size: 18px;
+  line-height: 1;
+  padding: 12px 28px;
+  background: rgba(18, 27, 40, 0.6);
+  color: #ffffff;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.p2-drag-indicator.is-visible {
+  opacity: 1;
+}
+
+.p2-comb {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  clip-path: inset(var(--scene-top-gap) 0px var(--scene-bottom-gap) 0px);
+}
+
+.p2-comb.is-visible {
+  opacity: 1;
+}
+
+.p2-comb.is-hidden {
+  opacity: 0;
+}
+
+.p2-darken-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 27, 40, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+  z-index: 7;
+  clip-path: inset(var(--scene-top-gap) 0px var(--scene-bottom-gap) 0px);
+}
+
+.p2-darken-overlay.is-visible {
+  opacity: 1;
+}
+
+.p2-photo-piece {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 220ms ease;
+  z-index: 8;
+  user-select: none;
+  -webkit-user-drag: none;
+  cursor: none !important;
+}
+
+.p2-photo-piece.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.p2-photo-piece:hover {
+  transform: translate(-50%, -50%) scale(1.0556);
+}
+
+.p2-hover-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  transition: opacity 100ms ease;
+  z-index: 12;
+  will-change: transform, opacity;
+}
+
+.p2-hover-cursor.is-visible {
+  opacity: 1;
+}
+
+.p2-hover-cursor img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}

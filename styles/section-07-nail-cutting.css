@@ -1,0 +1,171 @@
+#section-07-nail-cutting {
+    position: fixed;
+    inset: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7e4de;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  #section-07-nail-cutting.is-visible {
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  #section-07-nail-cutting.is-complete {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  
+  #section-07-nail-cutting.is-interactive {
+    cursor: none;
+  }
+  
+  .p4-nail-cutting-frame {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #e7e4de;
+  }
+  
+  .p4-nail-cutting-stage {
+    position: absolute;
+    inset: 0;
+    background: #e7e4de;
+  }
+  
+  .p4-nail-cutting-image {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateY(-50%);
+    user-select: none;
+    -webkit-user-drag: none;
+    z-index: 1;
+  }
+  
+  .p4-nail-cutting-stage.is-tall-image .p4-nail-cutting-image {
+    top: 0;
+    transform: none;
+  }
+  
+  .p4-scene-filter {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    z-index: 3;
+  }
+  
+  .p4-nail-cutting-stage.is-tall-image .p4-scene-filter {
+    top: 0;
+    transform: none;
+  }
+  
+  .p4-drag-hit {
+    position: absolute;
+    width: 130px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+    cursor: none !important;
+  }
+  
+  .p4-drag-hit.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .p4-drag-hit.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .p4-drag-indicator.ui-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    top: auto;
+    transform: translateX(-50%);
+    z-index: 7;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+    font-size: 18px;
+    line-height: 1;
+    padding: 12px 28px;
+    background: rgba(18, 27, 40, 0.6);
+    color: #ffffff;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  
+  .p4-drag-indicator.is-visible {
+    opacity: 1;
+  }
+  
+  .p4-photo-piece {
+    position: absolute;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 6;
+    cursor: none !important;
+    transition: opacity 260ms ease, transform 220ms ease;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  
+  .p4-photo-piece.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .p4-photo-piece:hover {
+    transform: translate(-50%, -50%) scale(1.0556);
+  }
+  
+  .p4-hover-cursor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(-9999px, -9999px, 0);
+    transition: opacity 100ms ease;
+    z-index: 10;
+    will-change: transform, opacity;
+  }
+  
+  .p4-hover-cursor.is-visible {
+    opacity: 1;
+  }
+  
+  .p4-hover-cursor img {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }

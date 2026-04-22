@@ -68,6 +68,8 @@ export function initLandingSection() {
   let aboutWindow = null;
   let aboutCloseButton = null;
 
+  let openingPawCursor = null;
+
   function sleep(ms) {
     return new Promise(function (resolve) {
       window.setTimeout(resolve, ms);
@@ -121,6 +123,59 @@ export function initLandingSection() {
     typedLayer.textContent = "";
   }
 
+  function ensureOpeningPawCursor() {
+    if (openingPawCursor) {
+      return openingPawCursor;
+    }
+
+    openingPawCursor = document.createElement("div");
+    openingPawCursor.setAttribute("aria-hidden", "true");
+    openingPawCursor.style.position = "absolute";
+    openingPawCursor.style.left = "0";
+    openingPawCursor.style.top = "0";
+    openingPawCursor.style.width = "64px";
+    openingPawCursor.style.height = "64px";
+    openingPawCursor.style.pointerEvents = "none";
+    openingPawCursor.style.opacity = "0";
+    openingPawCursor.style.transform = "translate3d(-9999px, -9999px, 0)";
+    openingPawCursor.style.transition = "opacity 100ms ease";
+    openingPawCursor.style.zIndex = "20";
+    openingPawCursor.style.willChange = "transform, opacity";
+
+    const paw = document.createElement("img");
+    paw.src = "./assets/shared/objects/mouse-icon-paw-dark-32.png";
+    paw.alt = "";
+    paw.style.width = "32px";
+    paw.style.height = "32px";
+    paw.style.display = "block";
+
+    openingPawCursor.appendChild(paw);
+    landingOpeningScene.appendChild(openingPawCursor);
+
+    return openingPawCursor;
+  }
+
+  function moveOpeningPawCursor(event) {
+    const rect = landingOpeningScene.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const cursor = ensureOpeningPawCursor();
+
+    cursor.style.transform = `translate3d(${x - 16}px, ${y - 16}px, 0)`;
+  }
+
+  function showOpeningPawCursor() {
+    ensureOpeningPawCursor().style.opacity = "1";
+    landingOpeningScene.style.cursor = "none";
+  }
+
+  function hideOpeningPawCursor() {
+    if (openingPawCursor) {
+      openingPawCursor.style.opacity = "0";
+    }
+    landingOpeningScene.style.cursor = "";
+  }
+
   function resetLandingStateForReplay() {
     landingSection.classList.remove("is-complete");
     landingSection.classList.remove("is-visible");
@@ -139,6 +194,7 @@ export function initLandingSection() {
     landingAboutButton.classList.remove("is-visible");
 
     hideHoverCursor();
+    hideOpeningPawCursor();
     closeAboutOverlay();
 
     resetTypedElement(landingTextLine1a, ".landing-text-typed");
@@ -463,6 +519,7 @@ export function initLandingSection() {
   async function handleLandingCatClick() {
     if (!landingIsVisible || !introSentenceDone || !landingCatHitbox.classList.contains("is-visible") || isLandingTransitionPlaying) return;
 
+    hideOpeningPawCursor();
     isLandingTransitionPlaying = true;
     landingOpeningScene.classList.add("is-fading");
     await sleep(OPENING_FADE_OUT_MS);
@@ -493,6 +550,25 @@ export function initLandingSection() {
 
   document.addEventListener("replayLandingFromHome", function () {
     replayLandingFromTransitionStart();
+  });
+
+  landingOpeningScene.addEventListener("mousemove", function (event) {
+    if (!landingIsVisible || !introSentenceDone || isLandingTransitionPlaying) {
+      hideOpeningPawCursor();
+      return;
+    }
+
+    if (isInsideElement(event, landingCatHitbox)) {
+      moveOpeningPawCursor(event);
+      showOpeningPawCursor();
+    } else {
+      hideOpeningPawCursor();
+    }
+  });
+
+  landingOpeningScene.addEventListener("mouseleave", function () {
+    hideOpeningPawCursor();
+    landingOpeningScene.style.cursor = "";
   });
 
   landingCatHitbox.addEventListener("click", handleLandingCatClick);

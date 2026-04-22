@@ -149,6 +149,9 @@ export function initHeartSection() {
   let currentPersonLeft = 240;
   const PERSON_START_LEFT = 240;
 
+  let hoverCursor = null;
+  let hoverCursorImage = null;
+
   function sleep(ms) {
     return new Promise(function (resolve) {
       window.setTimeout(resolve, ms);
@@ -171,7 +174,8 @@ export function initHeartSection() {
         BACKGROUND_2_3_OVERLAY_SRC,
         BACKGROUND_2_STAGE_2,
         BACKGROUND_2_STAGE_3,
-        BACKGROUND_2_STAGE_4
+        BACKGROUND_2_STAGE_4,
+        "./assets/shared/objects/mouse-icon-paw-dark-drag.png"
       ])
       .concat(BACKGROUND_2_P1_SEQUENCE)
       .concat(BACKGROUND_2_P2_SEQUENCE)
@@ -187,6 +191,108 @@ export function initHeartSection() {
     event.preventDefault();
   }
 
+  function ensureHoverCursor() {
+    if (hoverCursor) {
+      return hoverCursor;
+    }
+
+    hoverCursor = document.createElement("div");
+    hoverCursor.className = "heart-hover-cursor";
+
+    hoverCursorImage = document.createElement("img");
+    hoverCursorImage.src = "./assets/shared/objects/mouse-icon-paw-dark-drag.png";
+    hoverCursorImage.alt = "";
+
+    hoverCursor.appendChild(hoverCursorImage);
+    heartSection.appendChild(hoverCursor);
+
+    return hoverCursor;
+  }
+
+  function moveCursor(event) {
+    const rect = heartSection.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    ensureHoverCursor().style.transform = `translate3d(${x - 16}px, ${y - 16}px, 0)`;
+  }
+
+  function showCursor() {
+    ensureHoverCursor().classList.add("is-visible");
+    heartSection.classList.add("is-interactive");
+  }
+
+  function hideCursor() {
+    if (hoverCursor) {
+      hoverCursor.classList.remove("is-visible");
+    }
+    heartSection.classList.remove("is-interactive");
+  }
+
+  function getActivePieceElement() {
+    if (currentWalkStage === 1 && !pieceOnePlaced) {
+      return heartPiece1;
+    }
+
+    if (currentWalkStage === 2 && !pieceTwoPlaced) {
+      return heartPiece2;
+    }
+
+    if (currentWalkStage === 3 && !pieceThreePlaced) {
+      return heartPiece3;
+    }
+
+    return null;
+  }
+
+  function updateActivePieceState() {
+    heartPiece1.classList.remove("is-active-piece");
+    heartPiece2.classList.remove("is-active-piece");
+    heartPiece3.classList.remove("is-active-piece");
+  
+    const activePiece = getActivePieceElement();
+  
+    if (activePiece) {
+      activePiece.classList.add("is-active-piece");
+    }
+  }
+
+  function updatePieceHoverBindings(piece) {
+    piece.addEventListener("mouseenter", function (event) {
+      const activePiece = getActivePieceElement();
+
+      if (activePiece !== piece) {
+        return;
+      }
+
+      if (!heartToolbar.classList.contains("is-visible")) {
+        return;
+      }
+
+      if (piece.classList.contains("is-hidden")) {
+        return;
+      }
+
+      moveCursor(event);
+      showCursor();
+    });
+
+    piece.addEventListener("mouseleave", function () {
+      hideCursor();
+    });
+
+    piece.addEventListener("mousemove", function (event) {
+      const activePiece = getActivePieceElement();
+
+      if (activePiece !== piece) {
+        hideCursor();
+        return;
+      }
+
+      moveCursor(event);
+    });
+  }
+
   function hideAdvanceIndicator() {
     heartAdvanceIndicator.classList.remove("is-visible");
   }
@@ -197,10 +303,12 @@ export function initHeartSection() {
 
   function hideToolbar() {
     heartToolbar.classList.remove("is-visible");
+    hideCursor();
   }
 
   function showToolbar() {
     heartToolbar.classList.add("is-visible");
+    updateActivePieceState();
   }
 
   function hideToolbarIfDone() {
@@ -756,6 +864,7 @@ export function initHeartSection() {
     hideAdvanceIndicator();
     setWalkingPersonLeft(PERSON_START_LEFT);
     showWalkingPersonFrame(WALKING_SOURCES[0]);
+    updateActivePieceState();
     startWalkingAnimation();
     startBackgroundMovement(sectionRunId);
   }
@@ -766,6 +875,7 @@ export function initHeartSection() {
     hideAdvanceIndicator();
     setWalkingPersonLeft(PERSON_START_LEFT);
     showWalkingPersonFrame(WALKING_SOURCES[0]);
+    updateActivePieceState();
     startWalkingAnimation();
     startBackgroundMovement(sectionRunId);
   }
@@ -775,6 +885,7 @@ export function initHeartSection() {
     hasReachedTriggerPoint = false;
     hideAdvanceIndicator();
     showWalkingPersonFrame(WALKING_SOURCES[0]);
+    updateActivePieceState();
     startWalkingAnimation();
     startBackgroundMovement(sectionRunId);
   }
@@ -786,6 +897,7 @@ export function initHeartSection() {
 
     pieceOnePlaced = true;
     heartPiece1.classList.add("is-hidden");
+    hideCursor();
     hideText(thoughtStage1Before);
     overlayStage1.classList.add("is-hidden");
 
@@ -804,6 +916,7 @@ export function initHeartSection() {
 
     pieceTwoPlaced = true;
     heartPiece2.classList.add("is-hidden");
+    hideCursor();
     hideText(thoughtStage2Before);
     overlayStage2.classList.add("is-hidden");
 
@@ -822,6 +935,7 @@ export function initHeartSection() {
 
     pieceThreePlaced = true;
     heartPiece3.classList.add("is-hidden");
+    hideCursor();
     hideText(thoughtStage3Before);
     overlayStage3.classList.add("is-hidden");
     hideToolbarIfDone();
@@ -900,6 +1014,8 @@ export function initHeartSection() {
 
     piece.addEventListener("dragstart", preventImageDrag);
 
+    updatePieceHoverBindings(piece);
+
     piece.addEventListener("pointerdown", function (event) {
       if (!heartToolbar.classList.contains("is-visible")) {
         return;
@@ -909,6 +1025,12 @@ export function initHeartSection() {
         return;
       }
 
+      const activePiece = getActivePieceElement();
+      if (activePiece !== piece) {
+        return;
+      }
+
+      hideCursor();
       isDragging = true;
       startPointerX = event.clientX;
       startPointerY = event.clientY;
@@ -977,6 +1099,7 @@ export function initHeartSection() {
       piece.classList.remove("is-dragging");
       piece.releasePointerCapture(event.pointerId);
       resetToolbarPiece(piece);
+      hideCursor();
     });
   }
 
@@ -1035,6 +1158,8 @@ export function initHeartSection() {
     heartPiece1.classList.remove("is-hidden");
     heartPiece2.classList.remove("is-hidden");
     heartPiece3.classList.remove("is-hidden");
+
+    updateActivePieceState();
 
     backgroundTwoImage.src = BACKGROUND_SOURCES[1];
 

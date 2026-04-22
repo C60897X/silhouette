@@ -21,6 +21,10 @@
   pointer-events: none;
 }
 
+#section-09-heart.is-interactive {
+  cursor: none;
+}
+
 .heart-frame {
   position: relative;
   width: 100vw;
@@ -306,7 +310,6 @@
   background: rgba(18, 27, 40, 0.6);
   color: #ffffff;
   border-radius: 5px;
-  /* font-family: "Source Sans 3", sans-serif; */
   white-space: nowrap;
 }
 
@@ -358,19 +361,52 @@
   height: 70px;
   object-fit: contain;
   display: block;
-  cursor: grab;
+  cursor: default;
   pointer-events: auto;
   user-select: none;
   -webkit-user-drag: none;
   z-index: 2;
 }
 
+.heart-toolbar-piece.is-active-piece {
+  cursor: none !important;
+}
+
 .heart-toolbar-piece.is-dragging {
-  cursor: grabbing;
+  cursor: none !important;
+  z-index: 20;
+}
+
+.heart-toolbar-piece.is-dragging {
+  cursor: none !important;
   z-index: 20;
 }
 
 .heart-toolbar-piece.is-hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+.heart-hover-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  transition: opacity 100ms ease;
+  z-index: 30;
+  will-change: transform, opacity;
+}
+
+.heart-hover-cursor.is-visible {
+  opacity: 1;
+}
+
+.heart-hover-cursor img {
+  width: 32px;
+  height: 32px;
+  display: block;
 }

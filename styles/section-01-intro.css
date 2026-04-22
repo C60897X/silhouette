@@ -19,6 +19,10 @@
   cursor: none;
 }
 
+.intro-frame.is-memory-hover {
+  cursor: none;
+}
+
 /* First + second screens */
 .intro-text-stage {
   position: absolute;
@@ -315,7 +319,7 @@
   pointer-events: none;
   transition: opacity 220ms ease;
   z-index: 13;
-  cursor: pointer;
+  cursor: none;
 }
 
 .intro-photo-button.is-visible {
